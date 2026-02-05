@@ -1,0 +1,56 @@
+[
+  {
+    "id": "evt1",
+    "name": "Afrobeat Concert",
+    "date": "2026-02-10",
+    "time": "19:00",
+    "venue": "Kumasi Cultural Centre",
+    "city": "Kumasi",
+    "category": "music"
+  },
+  {
+    "id": "evt2",
+    "name": "Tech Innovation Fair",
+    "date": "2026-02-12",
+    "time": "09:00",
+    "venue": "University of Cape Coast Auditorium",
+    "city": "Cape Coast",
+    "category": "tech"
+  },
+  {
+    "id": "evt3",
+    "name": "Family Fun Festival",
+    "date": "2026-02-15",
+    "time": "12:00",
+    "venue": "Kumasi Sports Stadium",
+    "city": "Kumasi",
+    "category": "family"
+  },
+  {
+    "id": "evt4",
+    "name": "Highlife Night",
+    "date": "2026-02-18",
+    "time": "20:00",
+    "venue": "Accra National Theatre",
+    "city": "Accra",
+    "category": "music"
+  },
+  {
+    "id": "evt5",
+    "name": "Football Derby",
+    "date": "2026-02-20",
+    "time": "16:00",
+    "venue": "Accra Sports Stadium",
+    "city": "Accra",
+    "category": "sports"
+  },
+  {
+    "id": "evt6",
+    "name": "Cultural Dance Festival",
+    "date": "2026-02-22",
+    "time": "14:00",
+    "venue": "Takoradi Community Park",
+    "city": "Takoradi",
+    "category": "festival"
+  }
+]

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Favorites</title>
+  <link rel="stylesheet" href="styles/styles.css">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+</head>
+<body>
+  <!-- Banner Header -->
+  <header class="site-header">
+    <div class="banner">
+      <h1>⭐ My Favorite Events</h1>
+      <p class="author">Created by Sampson Havor</p>
+    </div>
+    <nav>
+      <a href="index.html">Home</a> | 
+      <a href="favorites.html">Favorites</a> | 
+      <a href="events.html">Events</a>
+    </nav>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <h2>Your Saved Events</h2>
+    <p>Here are the events you’ve marked as favorites. Click to view details or remove them individually. You can also clear all at once.</p>
+    <button onclick="clearAllFavorites()" class="clear-btn">Clear All Favorites</button>
+  </section>
+
+  <!-- Favorites Grid -->
+  <section id="favoritesList" class="grid"></section>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <p>© 2026 Local Event Explorer | Author: Sampson Havor</p>
+  </footer>
+
+  <!-- Script -->
+  <script>
+    function loadFavorites() {
+      const favorites = JSON.parse(localStorage.getItem("favorites")) || [];
+      const list = document.getElementById("favoritesList");
+      list.innerHTML = "";
+
+      if (favorites.length === 0) {
+        list.innerHTML = "<p style='text-align:center; font-style:italic;'>No favorites saved yet. Start exploring events!</p>";
+      } else {
+        favorites.forEach(fav => {
+          const card = document.createElement("div");
+          card.className = "event-card";
+          card.innerHTML = `
+            <h3>${fav.name}</h3>
+            <div class="card-actions">
+              <a href="events.html?id=${fav.id}" class="details-link">View Details</a>
+              <button onclick="removeFavorite('${fav.id}')">Remove</button>
+            </div>
+          `;
+          list.appendChild(card);
+        });
+      }
+    }
+
+    function removeFavorite(id) {
+      let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
+      favorites = favorites.filter(fav => fav.id !== id);
+      localStorage.setItem("favorites", JSON.stringify(favorites));
+      loadFavorites();
+    }
+
+    function clearAllFavorites() {
+      if (confirm("Are you sure you want to clear all favorites?")) {
+        localStorage.removeItem("favorites");
+        loadFavorites();
+        alert("All favorites have been cleared!");
+      }
+    }
+
+    loadFavorites();
+  </script>
+</body>
+</html>

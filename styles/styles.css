@@ -1,0 +1,209 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  color: #333;
+  background: linear-gradient(to bottom, #f0f8ff, #e6f2ff);
+}
+
+/* Header Banner */
+.site-header {
+  background: linear-gradient(to right, #0078d7, #005fa3);
+  color: white;
+  text-align: center;
+  padding: 2rem 1rem;
+}
+
+.site-header .banner {
+  background: rgba(0, 0, 0, 0.3); /* subtle overlay */
+  display: inline-block;
+  padding: 1rem 2rem;
+  border-radius: 8px;
+}
+
+.site-header h1 {
+  margin: 0;
+  font-size: 2rem;
+}
+
+.site-header .author {
+  font-style: italic;
+  color: #f0f8ff;
+  margin-top: 0.5rem;
+}
+
+/* Navigation */
+nav {
+  margin-top: 1rem;
+}
+nav a {
+  color: #f0f8ff;
+  text-decoration: none;
+  margin: 0 0.5rem;
+  font-weight: bold;
+}
+nav a:hover {
+  text-decoration: underline;
+}
+
+/* Hero Section */
+.hero {
+  text-align: center;
+  padding: 2rem;
+  background: linear-gradient(to right, #e6f2ff, #f0f8ff);
+  border-radius: 8px;
+  margin: 1rem auto;
+  max-width: 800px;
+}
+.hero h2 {
+  margin: 0;
+  color: #005fa3;
+}
+.hero p {
+  color: #333;
+  font-size: 1.1rem;
+}
+
+/* Carousel */
+.carousel {
+  text-align: center;
+  margin: 2rem auto;
+}
+.carousel h2 {
+  color: #0078d7;
+}
+.carousel-container {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  overflow-x: auto;
+  padding: 1rem;
+}
+.carousel-card {
+  background: white;
+  border-radius: 8px;
+  padding: 1rem;
+  min-width: 250px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease;
+}
+.carousel-card:hover {
+  transform: scale(1.05);
+}
+.carousel-card h3 {
+  color: #005fa3;
+}
+
+/* Search Bar */
+.search-bar {
+  text-align: center;
+  margin: 2rem auto;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  display: inline-block;
+  padding: 1rem;
+}
+.search-bar input, .search-bar select {
+  margin: 0.5rem;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+.search-bar button {
+  margin-top: 0.5rem;
+}
+
+/* Event Grid */
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+  padding: 1rem;
+}
+.event-card {
+  background: white;
+  border-radius: 10px;
+  padding: 1rem;
+  width: 280px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.event-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+}
+.event-card h3 {
+  color: #0078d7;
+}
+
+/* Card Actions (Favorites page) */
+.card-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 0.5rem;
+}
+.details-link {
+  color: #0078d7;
+  text-decoration: none;
+  font-weight: bold;
+}
+.details-link:hover {
+  text-decoration: underline;
+}
+
+/* Buttons */
+button {
+  background: #0078d7;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+button:hover {
+  background: #005fa3;
+}
+
+/* Clear All Favorites Button */
+.clear-btn {
+  background: #d9534f; /* red for emphasis */
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 0.6rem 1.2rem;
+  cursor: pointer;
+  margin-top: 1rem;
+  transition: background 0.3s ease;
+}
+.clear-btn:hover {
+  background: #c9302c;
+}
+
+/* Footer */
+.site-footer {
+  background: linear-gradient(to right, #0078d7, #005fa3);
+  color: white;
+  text-align: center;
+  padding: 1rem;
+  font-size: 0.9rem;
+}
+.site-footer p {
+  margin: 0;
+  font-style: italic;
+}
+
+/* Responsive Tweaks */
+@media (max-width: 600px) {
+  .carousel-container {
+    flex-direction: column;
+    align-items: center;
+  }
+  .event-card {
+    width: 90%;
+  }
+  .search-bar {
+    width: 90%;
+  }
+}
