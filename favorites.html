@@ -43,13 +43,21 @@
       list.innerHTML = "";
 
       if (favorites.length === 0) {
-        list.innerHTML = "<p style='text-align:center; font-style:italic;'>No favorites saved yet. Start exploring events!</p>";
+        list.innerHTML = `
+          <div class="empty-state">
+            <p>No favorites saved yet. Start exploring events!</p>
+            <a href="index.html" class="btn">Find Events</a>
+          </div>
+        `;
       } else {
         favorites.forEach(fav => {
           const card = document.createElement("div");
           card.className = "event-card";
           card.innerHTML = `
+            <img src="${fav.image || 'placeholder.jpg'}" alt="${fav.name}">
             <h3>${fav.name}</h3>
+            <p>${fav.date} ${fav.time ? '@ ' + fav.time : ''}</p>
+            <p>${fav.venue || ''}</p>
             <div class="card-actions">
               <a href="events.html?id=${fav.id}" class="details-link">View Details</a>
               <button onclick="removeFavorite('${fav.id}')">Remove</button>

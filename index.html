@@ -23,7 +23,7 @@
   <!-- Hero Section -->
   <section class="hero">
     <h2>Discover Events Around You</h2>
-    <p>Search by city and category to explore concerts, festivals, sports, and more.</p>
+    <p>Search by city, category, and date to explore concerts, festivals, sports, and more.</p>
   </section>
 
   <!-- Featured Events Carousel -->
@@ -45,11 +45,15 @@
       <option value="tech">Tech</option>
       <option value="family">Family</option>
     </select>
+    <input type="date" id="startDate">
+    <input type="date" id="endDate">
     <button id="searchBtn">Search</button>
   </section>
 
   <!-- Events Grid -->
-  <section id="eventsGrid" class="grid"></section>
+  <section id="eventsGrid" class="grid">
+    <!-- JS will inject event cards here -->
+  </section>
 
   <!-- Footer -->
   <footer class="site-footer">

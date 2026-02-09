@@ -1,38 +1,53 @@
+// app.js
+
+// Handle search button click
 document.getElementById("searchBtn").addEventListener("click", async () => {
   const city = document.getElementById("cityInput").value;
   const category = document.getElementById("categorySelect").value;
-  const events = await fetchEvents(city, category);
+  const startDate = document.getElementById("startDate")?.value;
+  const endDate = document.getElementById("endDate")?.value;
+
+  const events = await fetchEvents(city, category, startDate, endDate);
   renderEvents(events);
 });
 
+/**
+ * Render event cards into the eventsGrid section.
+ */
 function renderEvents(events) {
   const grid = document.getElementById("eventsGrid");
   grid.innerHTML = "";
-  if (events.length === 0) {
-    grid.innerHTML = "<p>No events found.</p>";
+
+  if (!events || events.length === 0) {
+    grid.innerHTML = "<p style='text-align:center;'>No events found. Try adjusting your search.</p>";
     return;
   }
+
   events.forEach(event => {
     const card = document.createElement("div");
     card.className = "event-card";
     card.innerHTML = `
+      <img src="${event.image || 'placeholder.jpg'}" alt="${event.name}">
       <h3>${event.name}</h3>
-      <p>${event.date} @ ${event.time}</p>
-      <p>${event.venue}</p>
-      <a href="events.html?id=${event.id}">View Details</a>
-      <button onclick="saveFavorite('${event.id}', '${event.name}')">Save to Favorites</button>
+      <p>${event.date} ${event.time ? '@ ' + event.time : ''}</p>
+      <p>${event.venue || ''}</p>
+      <div class="card-actions">
+        <a href="events.html?id=${event.id}" class="details-link">View Details</a>
+        <button onclick='saveFavorite(${JSON.stringify(event)})'>⭐ Save</button>
+      </div>
     `;
     grid.appendChild(card);
   });
 }
 
-function saveFavorite(id, name) {
+/**
+ * Save an event to favorites (full object).
+ */
+function saveFavorite(eventObj) {
   let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
-  if (!favorites.find(fav => fav.id === id)) {
-    favorites.push({ id, name });
+  if (!favorites.find(fav => fav.id === eventObj.id)) {
+    favorites.push(eventObj);
     localStorage.setItem("favorites", JSON.stringify(favorites));
-    alert(`${name} added to favorites!`);
-  } else {
-    alert(`${name} is already in favorites.`);
+    alert(`${eventObj.name} added to favorites!`);
   }
 }

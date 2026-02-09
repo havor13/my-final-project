@@ -40,39 +40,60 @@
     async function loadEvent() {
       const params = new URLSearchParams(window.location.search);
       const id = params.get("id");
-      const event = await fetchEventById(id);
 
-      const venueName = event.venue || "Unknown Venue";
-      const mapUrl = getMapEmbedUrl(venueName);
+      // Show loading state
+      document.getElementById("eventDetail").innerHTML = "<p>Loading event details...</p>";
 
-      document.getElementById("eventDetail").innerHTML = `
-        <h2>${event.name}</h2>
-        <p><strong>Date:</strong> ${event.date}</p>
-        <p><strong>Time:</strong> ${event.time}</p>
-        <p><strong>Venue:</strong> ${venueName}</p>
-        <div class="map-container">
-          <iframe src="${mapUrl}" width="100%" height="300" style="border:0;" allowfullscreen></iframe>
-        </div>
-        <div class="card-actions">
-          <button onclick="saveFavorite('${event.id}', '${event.name}')">⭐ Save to Favorites</button>
-          <button onclick="shareEvent('${event.id}')">📤 Share Event</button>
-        </div>
-      `;
-    }
+      try {
+        const event = await fetchEventById(id);
+        if (!event) {
+          document.getElementById("eventDetail").innerHTML = "<p>Sorry, event details could not be loaded.</p>";
+          return;
+        }
 
-    function saveFavorite(id, name) {
-      let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
-      if (!favorites.find(fav => fav.id === id)) {
-        favorites.push({ id, name });
-        localStorage.setItem("favorites", JSON.stringify(favorites));
-        alert(`${name} added to favorites!`);
+        const venueName = event.venue || "Unknown Venue";
+        const mapUrl = getMapEmbedUrl(venueName);
+
+        document.getElementById("eventDetail").innerHTML = `
+          <img src="${event.image || 'placeholder.jpg'}" alt="${event.name}" class="event-banner">
+          <h2>${event.name}</h2>
+          <p><strong>Date:</strong> ${event.date}</p>
+          <p><strong>Time:</strong> ${event.time}</p>
+          <p><strong>Venue:</strong> ${venueName}</p>
+          <div class="map-container">
+            <iframe src="${mapUrl}" width="100%" height="300" style="border:0;" allowfullscreen></iframe>
+          </div>
+          <div class="card-actions">
+            <button onclick='saveFavorite(${JSON.stringify(event)})'>⭐ Save to Favorites</button>
+            <button onclick='shareEvent(${JSON.stringify(event)})'>📤 Share Event</button>
+          </div>
+        `;
+      } catch (err) {
+        document.getElementById("eventDetail").innerHTML = "<p>Error loading event details.</p>";
       }
     }
 
-    function shareEvent(id) {
+    function saveFavorite(eventObj) {
+      let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
+      if (!favorites.find(fav => fav.id === eventObj.id)) {
+        favorites.push(eventObj); // store full object
+        localStorage.setItem("favorites", JSON.stringify(favorites));
+        alert(`${eventObj.name} added to favorites!`);
+      }
+    }
+
+    function shareEvent(eventObj) {
       const url = window.location.href;
-      navigator.clipboard.writeText(url);
-      alert("Event link copied to clipboard!");
+      if (navigator.share) {
+        navigator.share({
+          title: eventObj.name,
+          text: `Check out this event: ${eventObj.name}`,
+          url: url
+        });
+      } else {
+        navigator.clipboard.writeText(url);
+        alert("Event link copied to clipboard!");
+      }
     }
 
     loadEvent();

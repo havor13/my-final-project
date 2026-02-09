@@ -1,3 +1,4 @@
+/* General Body */
 body {
   font-family: Arial, sans-serif;
   margin: 0;
@@ -12,19 +13,16 @@ body {
   text-align: center;
   padding: 2rem 1rem;
 }
-
 .site-header .banner {
-  background: rgba(0, 0, 0, 0.3); /* subtle overlay */
+  background: rgba(0, 0, 0, 0.3);
   display: inline-block;
   padding: 1rem 2rem;
   border-radius: 8px;
 }
-
 .site-header h1 {
   margin: 0;
   font-size: 2rem;
 }
-
 .site-header .author {
   font-style: italic;
   color: #f0f8ff;
@@ -136,8 +134,30 @@ nav a:hover {
 .event-card h3 {
   color: #0078d7;
 }
+.event-card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 6px;
+  margin-bottom: 0.5rem;
+}
 
-/* Card Actions (Favorites page) */
+/* Event Detail Page */
+.event-banner {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 15px;
+}
+.map-container {
+  margin: 15px 0;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+/* Card Actions */
 .card-actions {
   display: flex;
   justify-content: space-between;
@@ -153,7 +173,7 @@ nav a:hover {
 }
 
 /* Buttons */
-button {
+button, .btn {
   background: #0078d7;
   color: white;
   border: none;
@@ -161,14 +181,16 @@ button {
   padding: 0.5rem 1rem;
   cursor: pointer;
   transition: background 0.3s ease;
+  text-decoration: none;
+  display: inline-block;
 }
-button:hover {
+button:hover, .btn:hover {
   background: #005fa3;
 }
 
 /* Clear All Favorites Button */
 .clear-btn {
-  background: #d9534f; /* red for emphasis */
+  background: #d9534f;
   color: white;
   border: none;
   border-radius: 4px;
@@ -179,6 +201,18 @@ button:hover {
 }
 .clear-btn:hover {
   background: #c9302c;
+}
+
+/* Empty State */
+.empty-state {
+  text-align: center;
+  padding: 2rem;
+  background: #f9f9f9;
+  border-radius: 8px;
+}
+.empty-state p {
+  font-style: italic;
+  margin-bottom: 1rem;
 }
 
 /* Footer */
