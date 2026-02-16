@@ -1,56 +1,92 @@
 [
   {
     "id": "evt1",
+    "shortTitle": "Afrobeat Concert",
     "name": "Afrobeat Concert",
     "date": "2026-02-10",
     "time": "19:00",
     "venue": "Kumasi Cultural Centre",
     "city": "Kumasi",
-    "category": "music"
+    "category": "music",
+    "tags": ["music", "live", "ghanaian"],
+    "image": "images/afrobeat.webp",
+    "url": "https://ticketmaster.com/event/afrobeat",
+    "description": "A vibrant Afrobeat concert featuring top Ghanaian artists.",
+    "price": "50 GHS"
   },
   {
     "id": "evt2",
+    "shortTitle": "Tech Fair",
     "name": "Tech Innovation Fair",
     "date": "2026-02-12",
     "time": "09:00",
     "venue": "University of Cape Coast Auditorium",
     "city": "Cape Coast",
-    "category": "tech"
+    "category": "tech",
+    "tags": ["tech", "innovation", "startups"],
+    "image": "images/techfair.webp",
+    "url": "https://ticketmaster.com/event/techfair",
+    "description": "Explore groundbreaking innovations and startups in Ghana’s tech ecosystem.",
+    "price": "Free"
   },
   {
     "id": "evt3",
+    "shortTitle": "Family Festival",
     "name": "Family Fun Festival",
     "date": "2026-02-15",
     "time": "12:00",
     "venue": "Kumasi Sports Stadium",
     "city": "Kumasi",
-    "category": "family"
+    "category": "family",
+    "tags": ["family", "games", "food"],
+    "image": "images/familyfestival.webp",
+    "url": "https://ticketmaster.com/event/familyfestival",
+    "description": "A fun-filled day with games, food, and entertainment for the whole family.",
+    "price": "20 GHS"
   },
   {
     "id": "evt4",
+    "shortTitle": "Highlife Night",
     "name": "Highlife Night",
     "date": "2026-02-18",
     "time": "20:00",
     "venue": "Accra National Theatre",
     "city": "Accra",
-    "category": "music"
+    "category": "music",
+    "tags": ["music", "highlife", "classic"],
+    "image": "images/highlife.webp",
+    "url": "https://ticketmaster.com/event/highlife",
+    "description": "An unforgettable night of classic and modern highlife music.",
+    "price": "70 GHS"
   },
   {
     "id": "evt5",
+    "shortTitle": "Football Derby",
     "name": "Football Derby",
     "date": "2026-02-20",
     "time": "16:00",
     "venue": "Accra Sports Stadium",
     "city": "Accra",
-    "category": "sports"
+    "category": "sports",
+    "tags": ["sports", "football", "derby"],
+    "image": "images/football.webp",
+    "url": "https://ticketmaster.com/event/footballderby",
+    "description": "Watch Accra’s biggest football teams battle it out in an exciting derby.",
+    "price": "30 GHS"
   },
   {
     "id": "evt6",
+    "shortTitle": "Dance Festival",
     "name": "Cultural Dance Festival",
     "date": "2026-02-22",
     "time": "14:00",
     "venue": "Takoradi Community Park",
     "city": "Takoradi",
-    "category": "festival"
+    "category": "festival",
+    "tags": ["festival", "dance", "culture"],
+    "image": "images/dancefestival.webp",
+    "url": "https://ticketmaster.com/event/dancefestival",
+    "description": "Experience traditional dance performances and cultural showcases.",
+    "price": "40 GHS"
   }
 ]

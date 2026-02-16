@@ -4,6 +4,7 @@ body {
   margin: 0;
   color: #333;
   background: linear-gradient(to bottom, #f0f8ff, #e6f2ff);
+  line-height: 1.6;
 }
 
 /* Header Banner */
@@ -18,6 +19,7 @@ body {
   display: inline-block;
   padding: 1rem 2rem;
   border-radius: 8px;
+  animation: fade-in 1s ease-in-out;
 }
 .site-header h1 {
   margin: 0;
@@ -38,9 +40,13 @@ nav a {
   text-decoration: none;
   margin: 0 0.5rem;
   font-weight: bold;
+  position: relative;
 }
 nav a:hover {
   text-decoration: underline;
+}
+nav a.active {
+  border-bottom: 2px solid #f0f8ff;
 }
 
 /* Hero Section */
@@ -51,6 +57,7 @@ nav a:hover {
   border-radius: 8px;
   margin: 1rem auto;
   max-width: 800px;
+  animation: fade-in 1s ease-in-out;
 }
 .hero h2 {
   margin: 0;
@@ -75,6 +82,7 @@ nav a:hover {
   gap: 1rem;
   overflow-x: auto;
   padding: 1rem;
+  scroll-behavior: smooth;
 }
 .carousel-card {
   background: white;
@@ -82,10 +90,11 @@ nav a:hover {
   padding: 1rem;
   min-width: 250px;
   box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-  transition: transform 0.3s ease;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 .carousel-card:hover {
   transform: scale(1.05);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
 }
 .carousel-card h3 {
   color: #005fa3;
@@ -100,12 +109,18 @@ nav a:hover {
   box-shadow: 0 2px 6px rgba(0,0,0,0.1);
   display: inline-block;
   padding: 1rem;
+  animation: fade-in 1s ease-in-out;
 }
 .search-bar input, .search-bar select {
   margin: 0.5rem;
   padding: 0.5rem;
   border: 1px solid #ccc;
   border-radius: 4px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.search-bar input:focus, .search-bar select:focus {
+  transform: scale(1.05);
+  box-shadow: 0 0 5px #0078d7;
 }
 .search-bar button {
   margin-top: 0.5rem;
@@ -126,6 +141,7 @@ nav a:hover {
   width: 280px;
   box-shadow: 0 4px 8px rgba(0,0,0,0.1);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  animation: fade-in 0.8s ease-in-out;
 }
 .event-card:hover {
   transform: translateY(-5px);
@@ -141,26 +157,79 @@ nav a:hover {
   border-radius: 6px;
   margin-bottom: 0.5rem;
 }
+.event-card .description {
+  font-size: 0.95rem;
+  color: #555;
+  margin: 0.5rem 0;
+}
+.event-card .price {
+  font-weight: bold;
+  color: #005fa3;
+  margin: 0.5rem 0;
+}
+
+/* Category Colors */
+.event-card .category {
+  display: inline-block;
+  padding: 0.3rem 0.6rem;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+.category.music { background: #e6ccff; color: #6a1b9a; }
+.category.sports { background: #ffe0e0; color: #c62828; }
+.category.tech { background: #e0f7fa; color: #006064; }
+.category.family { background: #fff9c4; color: #827717; }
+.category.festival { background: #fce4ec; color: #ad1457; }
 
 /* Event Detail Page */
+.event-detail-card {
+  background: #fff;
+  border-radius: 10px;
+  padding: 1.5rem;
+  max-width: 800px;
+  margin: 2rem auto;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  animation: fade-in 1s ease-in-out;
+}
 .event-banner {
   width: 100%;
   height: 250px;
   object-fit: cover;
   border-radius: 8px;
   margin-bottom: 15px;
+  animation: fade-in 1s ease-in-out;
 }
 .map-container {
   margin: 15px 0;
   border: 1px solid #ddd;
   border-radius: 8px;
   overflow: hidden;
+  animation: fade-in 1s ease-in-out;
+}
+.description {
+  margin: 1rem 0;
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: #444;
+  background: #f9f9f9;
+  padding: 0.8rem;
+  border-left: 4px solid #0078d7;
+  border-radius: 6px;
+}
+.price {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #005fa3;
+  margin: 0.5rem 0 1rem 0;
 }
 
 /* Card Actions */
 .card-actions {
   display: flex;
-  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.5rem;
   margin-top: 0.5rem;
 }
 .details-link {
@@ -172,6 +241,42 @@ nav a:hover {
   text-decoration: underline;
 }
 
+/* Banner Gallery Container */
+.banner-gallery {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+  padding: 2rem;
+  background: #f5f5f5;
+}
+
+/* Individual Banner Images */
+.banner-gallery img {
+  width: 220px;              /* uniform size */
+  height: 140px;             /* consistent aspect ratio */
+  object-fit: cover;         /* crop neatly */
+  border-radius: 8px;        /* rounded corners */
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Hover Effect */
+.banner-gallery img:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+}
+
+/* Fade-in Animation */
+.fade-in {
+  animation: fadeIn 0.6s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
 /* Buttons */
 button, .btn {
   background: #0078d7;
@@ -180,12 +285,22 @@ button, .btn {
   border-radius: 4px;
   padding: 0.5rem 1rem;
   cursor: pointer;
-  transition: background 0.3s ease;
+  transition: background 0.3s ease, transform 0.2s ease;
   text-decoration: none;
   display: inline-block;
 }
 button:hover, .btn:hover {
   background: #005fa3;
+  transform: scale(1.05);
+}
+
+/* Official Page Button */
+.card-actions .btn {
+  background: #28a745; /* green accent for external link */
+}
+.card-actions .btn:hover {
+  background: #218838;
+  transform: scale(1.05);
 }
 
 /* Clear All Favorites Button */
@@ -197,10 +312,11 @@ button:hover, .btn:hover {
   padding: 0.6rem 1.2rem;
   cursor: pointer;
   margin-top: 1rem;
-  transition: background 0.3s ease;
+  transition: background 0.3s ease, transform 0.2s ease;
 }
 .clear-btn:hover {
   background: #c9302c;
+  transform: scale(1.05);
 }
 
 /* Empty State */
@@ -209,6 +325,7 @@ button:hover, .btn:hover {
   padding: 2rem;
   background: #f9f9f9;
   border-radius: 8px;
+  animation: fade-in 1s ease-in-out;
 }
 .empty-state p {
   font-style: italic;
@@ -226,6 +343,12 @@ button:hover, .btn:hover {
 .site-footer p {
   margin: 0;
   font-style: italic;
+}
+
+/* Animations */
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 /* Responsive Tweaks */

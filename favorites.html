@@ -2,9 +2,13 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Favorites</title>
+  <title>Favorites | Local Event Explorer</title>
+  <meta name="description" content="View and manage your saved favorite events in Local Event Explorer.">
   <link rel="stylesheet" href="styles/styles.css">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&family=Oswald&family=Merriweather&display=swap" rel="stylesheet"> 
+  <link rel="preconnect" href="https://fonts.googleapis.com"> 
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 </head>
 <body>
   <!-- Banner Header -->
@@ -13,22 +17,24 @@
       <h1>⭐ My Favorite Events</h1>
       <p class="author">Created by Sampson Havor</p>
     </div>
-    <nav>
+    <nav aria-label="Main navigation">
       <a href="index.html">Home</a> | 
-      <a href="favorites.html">Favorites</a> | 
+      <a href="favorites.html" class="active">Favorites</a> | 
       <a href="events.html">Events</a>
     </nav>
   </header>
 
-  <!-- Hero Section -->
-  <section class="hero">
-    <h2>Your Saved Events</h2>
-    <p>Here are the events you’ve marked as favorites. Click to view details or remove them individually. You can also clear all at once.</p>
-    <button onclick="clearAllFavorites()" class="clear-btn">Clear All Favorites</button>
-  </section>
+  <main>
+    <!-- Hero Section -->
+    <section class="hero">
+      <h2>Your Saved Events</h2>
+      <p>Here are the events you’ve marked as favorites. Click to view details or remove them individually. You can also clear all at once.</p>
+      <button id="clearAllBtn" class="clear-btn">🗑 Clear All Favorites</button>
+    </section>
 
-  <!-- Favorites Grid -->
-  <section id="favoritesList" class="grid"></section>
+    <!-- Favorites Grid -->
+    <section id="favoritesList" class="grid" aria-live="polite"></section>
+  </main>
 
   <!-- Footer -->
   <footer class="site-footer">
@@ -36,7 +42,7 @@
   </footer>
 
   <!-- Script -->
-  <script>
+  <script type="module">
     function loadFavorites() {
       const favorites = JSON.parse(localStorage.getItem("favorites")) || [];
       const list = document.getElementById("favoritesList");
@@ -44,7 +50,7 @@
 
       if (favorites.length === 0) {
         list.innerHTML = `
-          <div class="empty-state">
+          <div class="empty-state fade-in">
             <p>No favorites saved yet. Start exploring events!</p>
             <a href="index.html" class="btn">Find Events</a>
           </div>
@@ -52,18 +58,27 @@
       } else {
         favorites.forEach(fav => {
           const card = document.createElement("div");
-          card.className = "event-card";
+          card.className = "event-card fade-in";
           card.innerHTML = `
-            <img src="${fav.image || 'placeholder.jpg'}" alt="${fav.name}">
+            <img src="${fav.image || 'placeholder.jpg'}" alt="Banner for ${fav.name}">
             <h3>${fav.name}</h3>
-            <p>${fav.date} ${fav.time ? '@ ' + fav.time : ''}</p>
-            <p>${fav.venue || ''}</p>
+            <p><strong>Date:</strong> ${fav.date || "TBA"} ${fav.time ? '@ ' + fav.time : ''}</p>
+            <p><strong>Venue:</strong> ${fav.venue || ""}, ${fav.city || ""}</p>
+            <span class="category ${fav.category?.toLowerCase() || ""}">${fav.category || ""}</span>
+            <p class="description">${fav.description || ""}</p>
+            <p class="price"><strong>Price:</strong> ${fav.price || "TBA"}</p>
             <div class="card-actions">
               <a href="events.html?id=${fav.id}" class="details-link">View Details</a>
-              <button onclick="removeFavorite('${fav.id}')">Remove</button>
+              <button class="remove-btn" data-id="${fav.id}">Remove</button>
+              ${fav.url ? `<a href="${fav.url}" target="_blank" class="btn">Official Page</a>` : ""}
             </div>
           `;
           list.appendChild(card);
+        });
+
+        // Attach remove event listeners
+        document.querySelectorAll(".remove-btn").forEach(btn => {
+          btn.addEventListener("click", () => removeFavorite(btn.dataset.id));
         });
       }
     }
@@ -82,6 +97,8 @@
         alert("All favorites have been cleared!");
       }
     }
+
+    document.getElementById("clearAllBtn").addEventListener("click", clearAllFavorites);
 
     loadFavorites();
   </script>

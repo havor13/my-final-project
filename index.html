@@ -3,8 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <title>Local Event Explorer</title>
+  <meta name="description" content="Discover concerts, festivals, sports, and local events near you with Local Event Explorer. Search by city, category, and date.">
   <link rel="stylesheet" href="styles/styles.css">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&family=Oswald&family=Merriweather&display=swap" rel="stylesheet"> 
+  <link rel="preconnect" href="https://fonts.googleapis.com"> 
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 </head>
 <body>
   <!-- Banner Header -->
@@ -13,47 +17,81 @@
       <h1>📍 Local Event Explorer</h1>
       <p class="author">Created by Sampson Havor</p>
     </div>
-    <nav>
-      <a href="index.html">Home</a> | 
+    <nav aria-label="Main navigation">
+      <a href="index.html" class="active">Home</a> | 
       <a href="favorites.html">Favorites</a> | 
       <a href="events.html">Events</a>
     </nav>
   </header>
 
-  <!-- Hero Section -->
-  <section class="hero">
-    <h2>Discover Events Around You</h2>
-    <p>Search by city, category, and date to explore concerts, festivals, sports, and more.</p>
-  </section>
+  <main>
+    <!-- Hero Section -->
+    <section class="hero">
+      <h2>Discover Events Around You</h2>
+      <p>Search by city, category, and date to explore concerts, festivals, sports, and more.</p>
+    </section>
 
-  <!-- Featured Events Carousel -->
-  <section class="carousel">
-    <h2>🌟 Featured Events</h2>
-    <div class="carousel-container" id="carouselContainer">
-      <!-- JS will inject 2–3 featured events here -->
-    </div>
-  </section>
+    <!-- Featured Event Banners -->
+    <section class="banner-gallery">
+      <!-- Afrobeat Concert -->
+      <img src="images/afrobeat.webp" alt="Banner for Afrobeat Concert" class="event-banner fade-in">
 
-  <!-- Search Bar -->
-  <section class="search-bar">
-    <input type="text" id="cityInput" placeholder="Enter City...">
-    <select id="categorySelect">
-      <option value="">All Categories</option>
-      <option value="music">Concerts</option>
-      <option value="sports">Sports</option>
-      <option value="festival">Festivals</option>
-      <option value="tech">Tech</option>
-      <option value="family">Family</option>
-    </select>
-    <input type="date" id="startDate">
-    <input type="date" id="endDate">
-    <button id="searchBtn">Search</button>
-  </section>
+      <!-- Tech Innovation Fair -->
+      <img src="images/techfair.webp" alt="Banner for Tech Innovation Fair" class="event-banner fade-in">
 
-  <!-- Events Grid -->
-  <section id="eventsGrid" class="grid">
-    <!-- JS will inject event cards here -->
-  </section>
+      <!-- Family Fun Festival -->
+      <img src="images/familyfestival.webp" alt="Banner for Family Fun Festival" class="event-banner fade-in">
+
+      <!-- Highlife Night -->
+      <img src="images/highlife.webp" alt="Banner for Highlife Night" class="event-banner fade-in">
+
+      <!-- Football Derby -->
+      <img src="images/football.webp" alt="Banner for Football Derby" class="event-banner fade-in">
+
+      <!-- Cultural Dance Festival -->
+      <img src="images/dancefestival.webp" alt="Banner for Cultural Dance Festival" class="event-banner fade-in">
+    </section>
+
+    <!-- Featured Events Carousel -->
+    <section class="carousel">
+      <h2>🌟 Featured Events</h2>
+      <div class="carousel-container" id="carouselContainer" aria-live="polite">
+        <!-- JS will inject 2–3 featured events here -->
+        <p class="loading">Loading featured events...</p>
+      </div>
+      <button class="carousel-prev" aria-label="Previous event">◀</button>
+      <button class="carousel-next" aria-label="Next event">▶</button>
+    </section>
+
+    <!-- Search Bar -->
+    <section class="search-bar">
+      <label for="cityInput">City:</label>
+      <input type="text" id="cityInput" placeholder="Enter City...">
+
+      <label for="categorySelect">Category:</label>
+      <select id="categorySelect">
+        <option value="">All Categories</option>
+        <option value="music">Concerts</option>
+        <option value="sports">Sports</option>
+        <option value="festival">Festivals</option>
+        <option value="tech">Tech</option>
+        <option value="family">Family</option>
+      </select>
+
+      <label for="startDate">Start Date:</label>
+      <input type="date" id="startDate">
+
+      <label for="endDate">End Date:</label>
+      <input type="date" id="endDate">
+
+      <button id="searchBtn">Search</button>
+    </section>
+
+    <!-- Events Grid -->
+    <section id="eventsGrid" class="grid" aria-live="polite">
+      <!-- JS will inject event cards here -->
+    </section>
+  </main>
 
   <!-- Footer -->
   <footer class="site-footer">
@@ -61,29 +99,33 @@
   </footer>
 
   <!-- Scripts -->
-  <script src="scripts/api.js"></script>
-  <script src="scripts/app.js"></script>
+  <script src="scripts/api.js" type="module"></script>
+  <script src="scripts/app.js" type="module"></script>
   <script>
     // Load featured events (first 3 from data.json)
     async function loadFeaturedEvents() {
-      const response = await fetch("data.json");
-      const data = await response.json();
-      const featured = data.slice(0, 3); // pick first 3 events
+      try {
+        const response = await fetch("data.json");
+        const data = await response.json();
+        const featured = data.slice(0, 3); // pick first 3 events
 
-      const container = document.getElementById("carouselContainer");
-      container.innerHTML = "";
+        const container = document.getElementById("carouselContainer");
+        container.innerHTML = "";
 
-      featured.forEach(event => {
-        const card = document.createElement("div");
-        card.className = "carousel-card";
-        card.innerHTML = `
-          <h3>${event.name}</h3>
-          <p>${event.date} @ ${event.time}</p>
-          <p>${event.venue}</p>
-          <a href="events.html?id=${event.id}">View Details</a>
-        `;
-        container.appendChild(card);
-      });
+        featured.forEach(event => {
+          const card = document.createElement("div");
+          card.className = "carousel-card fade-in";
+          card.innerHTML = `
+            <h3>${event.name}</h3>
+            <p>${event.date} @ ${event.time}</p>
+            <p>${event.venue}</p>
+            <a href="events.html?id=${event.id}">View Details</a>
+          `;
+          container.appendChild(card);
+        });
+      } catch (error) {
+        document.getElementById("carouselContainer").innerHTML = "<p>Error loading events. Please try again later.</p>";
+      }
     }
 
     loadFeaturedEvents();
