@@ -4,11 +4,10 @@ const GOOGLE_MAPS_API_KEY = "YOUR_GOOGLE_MAPS_KEY";
 
 /**
  * Helper: Build correct path for local data.json
- * Works regardless of port (8000, 5500, etc.)
+ * Uses relative path so it works locally and on GitHub Pages.
  */
 function getDataJsonUrl() {
-  const baseUrl = window.location.origin; // e.g. http://127.0.0.1:8000
-  return `${baseUrl}/data.json`;
+  return "./data.json"; // relative to events.html
 }
 
 /**
@@ -18,10 +17,8 @@ async function fetchEvents(city, category, startDate, endDate) {
   if (USE_MOCK_DATA) {
     try {
       const response = await fetch(getDataJsonUrl());
+      if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
       const data = await response.json();
-
-      console.log("🔍 Raw events:", data);
-      console.log("📌 Filters -> City:", city, "Category:", category, "Dates:", startDate, endDate);
 
       const filtered = data.filter(event => {
         const matchCity = city ? event.city?.toLowerCase().includes(city.toLowerCase()) : true;
@@ -33,7 +30,6 @@ async function fetchEvents(city, category, startDate, endDate) {
         return matchCity && matchCategory && matchDate;
       });
 
-      console.log("✅ Results:", filtered);
       return filtered;
     } catch (err) {
       console.error("❌ Error loading mock data:", err);
@@ -49,6 +45,7 @@ async function fetchEvents(city, category, startDate, endDate) {
 
     try {
       const response = await fetch(url);
+      if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
       const data = await response.json();
       return data._embedded ? data._embedded.events.map(formatEvent) : [];
     } catch (err) {
@@ -65,11 +62,9 @@ async function fetchEventById(id) {
   if (USE_MOCK_DATA) {
     try {
       const response = await fetch(getDataJsonUrl());
+      if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
       const data = await response.json();
-      console.log("📂 Loaded events:", data);
-      console.log("🔎 Looking for ID:", id);
       const found = data.find(event => event.id === id);
-      console.log("✅ Found event:", found);
       return found;
     } catch (err) {
       console.error("❌ Error loading mock event:", err);
@@ -79,6 +74,7 @@ async function fetchEventById(id) {
     const url = `https://app.ticketmaster.com/discovery/v2/events/${id}.json?apikey=${TICKETMASTER_API_KEY}`;
     try {
       const response = await fetch(url);
+      if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
       const event = await response.json();
       return formatEvent(event);
     } catch (err) {
@@ -95,17 +91,17 @@ function formatEvent(event) {
   return {
     id: event.id,
     name: event.name,
-    date: event.dates?.start?.localDate || "",
-    time: event.dates?.start?.localTime || "",
-    venue: event._embedded?.venues?.[0]?.name || "",
-    city: event._embedded?.venues?.[0]?.city?.name || "",
-    category: event.classifications?.[0]?.segment?.name?.toLowerCase() || "",
-    image: event.images?.[0]?.url || "placeholder.jpg",
+    date: event.date || event.dates?.start?.localDate || "",
+    time: event.time || event.dates?.start?.localTime || "",
+    venue: event.venue || event._embedded?.venues?.[0]?.name || "",
+    city: event.city || event._embedded?.venues?.[0]?.city?.name || "",
+    category: event.category || event.classifications?.[0]?.segment?.name?.toLowerCase() || "",
+    image: event.image || event.images?.[0]?.url || "placeholder.jpg",
     url: event.url || "",
-    description: event.info || event.pleaseNote || "No description available.",
-    price: event.priceRanges?.[0]?.min
+    description: event.description || event.info || event.pleaseNote || "No description available.",
+    price: event.price || (event.priceRanges?.[0]?.min
       ? `${event.priceRanges[0].min} - ${event.priceRanges[0].max} ${event.priceRanges[0].currency}`
-      : "TBA"
+      : "TBA")
   };
 }
 

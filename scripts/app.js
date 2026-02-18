@@ -1,14 +1,20 @@
 // app.js
 
-// Handle search button click
+// Attach search button handler
 document.getElementById("searchBtn").addEventListener("click", async () => {
-  const city = document.getElementById("cityInput").value.trim();
-  const category = document.getElementById("categorySelect").value;
-  const startDate = document.getElementById("startDate")?.value;
-  const endDate = document.getElementById("endDate")?.value;
+  try {
+    const city = document.getElementById("cityInput").value.trim();
+    const category = document.getElementById("categorySelect").value;
+    const startDate = document.getElementById("startDate")?.value;
+    const endDate = document.getElementById("endDate")?.value;
 
-  const events = await fetchEvents(city, category, startDate, endDate);
-  renderEvents(events);
+    const events = await fetchEvents(city, category, startDate, endDate);
+    renderEvents(events);
+  } catch (err) {
+    console.error("❌ Error fetching events:", err);
+    document.getElementById("eventsGrid").innerHTML =
+      "<p style='text-align:center;color:red;'>Could not load events. Please try again later.</p>";
+  }
 });
 
 /**
@@ -19,7 +25,11 @@ function renderEvents(events) {
   grid.innerHTML = "";
 
   if (!events || events.length === 0) {
-    grid.innerHTML = "<p style='text-align:center;'>No events found. Try adjusting your search.</p>";
+    grid.innerHTML = `
+      <div class="empty-state fade-in">
+        <p>⚠️ No events found. Try adjusting your search.</p>
+      </div>
+    `;
     return;
   }
 
@@ -28,16 +38,18 @@ function renderEvents(events) {
     card.className = "event-card fade-in";
 
     card.innerHTML = `
-      <img src="${event.image || 'placeholder.jpg'}" alt="Banner for ${event.name}">
+      <img src="${event.image || 'images/placeholder.jpg'}" 
+           alt="Banner for ${event.name}" 
+           class="event-image">
       <h3>${event.name}</h3>
       <p><strong>Date:</strong> ${event.date || "TBA"} ${event.time ? '@ ' + event.time : ''}</p>
-      <p><strong>Venue:</strong> ${event.venue || ""}, ${event.city || ""}</p>
+      <p><strong>Venue:</strong> ${event.venue || ""}${event.city ? ', ' + event.city : ""}</p>
       <span class="category ${event.category?.toLowerCase() || ""}">${event.category || ""}</span>
-      <p class="description">${event.description || ""}</p>
+      <p class="description">${event.description || "No description available."}</p>
       <p class="price"><strong>Price:</strong> ${event.price || "TBA"}</p>
       <div class="card-actions">
         <a href="events.html?id=${event.id}" class="details-link">View Details</a>
-        <button class="save-btn">⭐ Save</button>
+        <button class="save-btn" aria-label="Save ${event.name} to favorites">⭐ Save</button>
         ${event.url ? `<a href="${event.url}" target="_blank" class="btn">Official Page</a>` : ""}
       </div>
     `;
